@@ -1,8 +1,7 @@
 # Felogram Android
 
 Independent Android Telegram client for developers and power users.
-**Status: upstream source foundation and product planning. No Felogram APK has
-been built or released from this fork.** Upstream features are not yet verified
+**Status: upstream-derived debug APK builds and opens offline in an isolated emulator. No rebranded Felogram APK has been released.** Upstream features are not yet verified
 as Felogram features. The existing Windows Python prototype is a separate project.
 
 ## Foundation
@@ -33,9 +32,11 @@ provider, data disclosure and Telegram terms are assessed.
 
 - [x] Create public repository separately from Windows prototype.
 - [x] Preserve official source provenance and GPL license.
-- [ ] Reproduce unmodified debug APK build; record toolchain/source manifests.
+- [x] Build upstream-derived ARM64 debug APK; record source/toolchain and offline startup evidence.
+- [x] Verify corrected ARM64-only packaging, signature and offline emulator startup.
+- [ ] Verify startup on a physical ARM64 device.
 - [x] Add a Windows build helper and prerequisite checks; Gradle wrapper and
-  exact SDK/NDK/CMake setup verified. APK completion remains a separate gate.
+  exact SDK/NDK/CMake setup verified. See [baseline evidence](docs/BASELINE_EVIDENCE.md).
 - [ ] Add Felogram package/icon/name and About/source links; install beside upstream.
 - [ ] Configure own API/push identities outside source; keep signing secrets private.
 - [ ] Verify login, reopen/logout and multi-account isolation with test accounts.
