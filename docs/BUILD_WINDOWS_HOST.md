@@ -50,7 +50,10 @@ Use it only for baseline compilation. Felogram distribution requires independent
 identity, own API/push configuration and private signing setup. Never commit real
 credentials, keystores, SDK paths or session data.
 
-The default task is `:TMessagesProj_App:assembleAfatDebug` (upstream's multi-ABI
-debug flavor). APK output is under `TMessagesProj_App/build/outputs/apk` if it
+The default task is `:TMessagesProj_App:assembleAfatDebug`, restricted through
+Android Gradle Plugin's injected ABI property to `arm64-v8a` for the first phone
+baseline. Use `-Abi x86_64` for a matching emulator or `-Abi all` to build the
+whole upstream debug flavor. Other ABIs require separate verification, and x86
+native configuration requires NASM on PATH. APK output is under `TMessagesProj_App/build/outputs/apk` if it
 succeeds. A Gradle launcher success or configuration success is not an APK build.
 Record task exit status, APK SHA-256, tool versions and runtime evidence separately.
