@@ -140,6 +140,9 @@ android {
 
 
     defaultConfig {
+        buildConfigField 'int', 'FELOGRAM_API_ID', rootProject.ext.felogramApiId.toString()
+        buildConfigField 'String', 'FELOGRAM_API_HASH', groovy.json.JsonOutput.toJson(rootProject.ext.felogramApiHash)
+        buildConfigField 'boolean', 'FELOGRAM_API_CONFIGURED', rootProject.ext.felogramApiConfigured.toString()
         minSdkVersion 21
         targetSdkVersion 36
 
@@ -250,7 +253,7 @@ def getProps(String propName) {
         return "";
     }
 }
-apply plugin: 'com.google.gms.google-services'
+// Own push configuration is a separate release gate. Do not generate upstream Firebase identity.
 
 task checkVisibility {
     doFirst {

@@ -1,0 +1,24 @@
+// Maintainer build configuration. Real values stay in an ignored local file.
+def localConfiguration = new Properties()
+def configurationFile = rootProject.file('.felogram.properties')
+if (configurationFile.exists()) {
+    configurationFile.withInputStream { localConfiguration.load(it) }
+}
+def apiIdText = localConfiguration.getProperty('api.id', '0').trim()
+def apiHash = localConfiguration.getProperty('api.hash', '').trim()
+if (!(apiIdText ==~ /\d+/)) {
+    throw new GradleException('api.id must be a positive integer or 0 for offline development.')
+}
+def apiId = Integer.parseInt(apiIdText)
+def configured = apiId > 0 && apiHash ==~ /[a-fA-F0-9]{32}/
+if ((apiId > 0 || !apiHash.isEmpty()) && !configured) {
+    throw new GradleException('Configure both api.id and a 32-character hexadecimal api.hash in .felogram.properties.')
+}
+if (!configured && gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains('release') || it.toLowerCase().contains('standalone')
+}) {
+    throw new GradleException('Distribution builds require Felogram maintainer API configuration.')
+}
+ext.felogramApiId = apiId
+ext.felogramApiHash = configured ? apiHash : '00000000000000000000000000000000'
+ext.felogramApiConfigured = configured

@@ -1,8 +1,13 @@
 # Android baseline build on Windows
 
-This guide builds the upstream-derived debug baseline. It does not establish a
-rebranded or release-ready Felogram APK. Do not install the upstream-identity APK
-over another Telegram installation or sign into it for Felogram verification.
+This guide builds the primary Felogram debug app on Windows. Without private
+maintainer API configuration, it is an offline development build with sign-in
+disabled. It is not a signed distribution release. Follow [identity setup](IDENTITY_SETUP.md).
+
+The upstream-identity baseline and its hashes are preserved in
+[baseline evidence](BASELINE_EVIDENCE.md); its source/helper snapshot is commit
+`bd4c81eb380a20cb9fc1a7649f83adf5d0e67cbb`. Use a separate checkout to reproduce
+that snapshot and test it only in an isolated emulator.
 
 ## 1. Source and long paths
 
@@ -45,8 +50,8 @@ The helper's Gradle cache is ignored; set GRADLE_USER_HOME to reuse another cach
 
 ## 3. Credentials and output
 
-Upstream contains documented dummy API/push/signing configuration for its build.
-Use it only for baseline compilation. Felogram distribution requires independent
+The default debug signing configuration remains upstream's documented dummy keystore. Telegram API configuration now comes from the ignored maintainer file; see identity setup.
+Use the default signer only for local development. Felogram distribution requires independent
 identity, own API/push configuration and private signing setup. Never commit real
 credentials, keystores, SDK paths or session data.
 

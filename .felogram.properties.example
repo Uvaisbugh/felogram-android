@@ -1,0 +1,5 @@
+# Copy to .felogram.properties locally. Never commit the completed file.
+# These credentials belong to the app maintainer, not every end user.
+# Leave these values for an offline debug build with sign-in disabled.
+api.id=0
+api.hash=

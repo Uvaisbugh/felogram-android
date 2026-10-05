@@ -128,6 +128,20 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
 
     private boolean isOnLogout;
 
+    private boolean ensureApiConfigured() {
+        if (org.telegram.messenger.BuildConfig.FELOGRAM_API_CONFIGURED) {
+            return true;
+        }
+        if (getParentActivity() != null) {
+            showDialog(new AlertDialog.Builder(getParentActivity())
+                    .setTitle(LocaleController.getString(R.string.FelogramBuildSetupTitle))
+                    .setMessage(LocaleController.getString(R.string.FelogramBuildSetup))
+                    .setPositiveButton(LocaleController.getString(R.string.OK), null)
+                    .create());
+        }
+        return false;
+    }
+
     @Override
     public boolean onFragmentCreate() {
         MessagesController.getGlobalMainSettings().edit().putLong("intro_crashed_time", System.currentTimeMillis()).apply();
@@ -141,7 +155,7 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
                 LocaleController.getString(R.string.Page6Title)
         };
         messages = new String[]{
-                LocaleController.getString(R.string.Page1Message),
+                LocaleController.getString(R.string.FelogramIntroMessage),
                 LocaleController.getString(R.string.Page2Message),
                 LocaleController.getString(R.string.Page3Message),
                 LocaleController.getString(R.string.Page5Message),
@@ -155,9 +169,7 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
     public View createView(Context context) {
         logoDrawable = context.getResources().getDrawable(R.drawable.telegram_logo).mutate();
         logoDrawable.setBounds(0, dp(8.666f), dp(115), dp(35));
-        SpannableStringBuilder ssb = new SpannableStringBuilder(LocaleController.getString(R.string.Page1Title));
-        ssb.setSpan(new ImageSpan(logoDrawable), 0, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        titles[0] = ssb;
+        titles[0] = LocaleController.getString(R.string.AppName);
 
 
         actionBar.setAddToContainer(false);
@@ -379,6 +391,9 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
         startMessagingButton.setPadding(dp(34), 0, dp(34), 0);
         frameContainerView.addView(startMessagingButton, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 16, 0, 16, 76));
         startMessagingButton.setOnClickListener(view -> {
+            if (!ensureApiConfigured()) {
+                return;
+            }
             if (startPressed) {
                 return;
             }
@@ -396,6 +411,9 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
         switchLanguageTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         frameContainerView.addView(switchLanguageTextView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 30, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0, 0, 20));
         switchLanguageTextView.setOnClickListener(v -> {
+            if (!ensureApiConfigured()) {
+                return;
+            }
             if (startPressed || localeInfo == null) {
                 return;
             }
@@ -790,10 +808,17 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
             loadTexture(R.drawable.intro_powerful_star, 18);
             loadTexture(R.drawable.intro_private_door, 19);
             loadTexture(R.drawable.intro_private_screw, 20);
-            loadTexture(R.drawable.intro_tg_plane, 21);
+            loadTexture(v -> {
+                int size = dp(ICON_HEIGHT_DP);
+                Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+                Drawable mark = getParentActivity().getResources().getDrawable(R.drawable.felogram_mark).mutate();
+                mark.setBounds(0, 0, size, size);
+                mark.draw(new Canvas(bitmap));
+                return bitmap;
+            }, 21);
             loadTexture(v -> {
                 Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                paint.setColor(ThemeColors.TELEGRAM_COLOR); // It's logo color, it should not be colored by the theme
+                paint.setColor(0xFF0B1220);
                 int size = dp(ICON_HEIGHT_DP);
                 Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
                 Canvas c = new Canvas(bm);
