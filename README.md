@@ -1,7 +1,7 @@
-# Felogram Android — source foundation
+# Felogram Android — development client
 
-This is an independent fork for a planned developer and power-user client.
-**No Felogram APK is available yet.** See [Felogram's roadmap and status](FELOGRAM.md).
+An independent Telegram client for developers and power users. The ARM64 development APK builds and opens offline beside Telegram.
+**No production APK is released.** See [roadmap and status](FELOGRAM.md), [Windows-host build guide](docs/BUILD_WINDOWS_HOST.md), and [private maintainer configuration](docs/IDENTITY_SETUP.md).
 Upstream source and license are preserved. The documentation below describes
 upstream Telegram; this fork is not affiliated with Telegram.
 
