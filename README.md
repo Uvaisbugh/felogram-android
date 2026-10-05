@@ -1,3 +1,11 @@
+# Felogram Android — source foundation
+
+This is an independent fork for a planned developer and power-user client.
+**No Felogram APK is available yet.** See [Felogram's roadmap and status](FELOGRAM.md).
+Upstream source and license are preserved. The documentation below describes
+upstream Telegram; this fork is not affiliated with Telegram.
+
+---
 ## Telegram messenger for Android
 
 [Telegram](https://telegram.org) is a messaging app with a focus on speed and security. It’s superfast, simple and free.
