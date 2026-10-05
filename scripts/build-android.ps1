@@ -56,11 +56,25 @@ try {
         $env:GRADLE_USER_HOME = Join-Path $projectRoot '.gradle-user-home'
     }
     $abiArguments = @()
-    if ($Abi -ne 'all') { $abiArguments = @("-Pandroid.injected.build.abi=$Abi") }
+    if ($Abi -ne 'all') {
+        $abiArguments = @(
+            "-Pandroid.injected.build.abi=$Abi",
+            "-DfelogramBuildAbi=$Abi",
+            '--init-script', (Join-Path $PSScriptRoot 'single-abi.gradle')
+        )
+    }
     & $javaExe -classpath $wrapperJar org.gradle.wrapper.GradleWrapperMain $Task @abiArguments `
         --no-daemon --max-workers=2 '-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8' `
         --console=plain
     if ($LASTEXITCODE -ne 0) { throw "Gradle failed with exit code $LASTEXITCODE." }
+    if ($Task -eq ':TMessagesProj_App:assembleAfatDebug') {
+        $apkPath = Join-Path $projectRoot 'TMessagesProj_App\build\intermediates\apk\afat\debug\app.apk'
+        if (-not (Test-Path -LiteralPath $apkPath)) {
+            throw 'Gradle completed but the tested APK output location is missing; inspect the AGP listing redirect.'
+        }
+        Write-Output "APK: $apkPath"
+        Write-Output ('SHA-256: ' + (Get-FileHash -LiteralPath $apkPath -Algorithm SHA256).Hash)
+    }
 } finally {
     Pop-Location
     $env:JAVA_HOME = $previousJava

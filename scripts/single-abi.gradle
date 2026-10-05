@@ -1,0 +1,19 @@
+// Keep packaged dependency libraries aligned with the selected native build ABI.
+def requestedAbi = System.getProperty('felogramBuildAbi')
+if (!(requestedAbi in ['arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'])) {
+    throw new GradleException('A supported felogramBuildAbi is required.')
+}
+gradle.beforeProject { project ->
+    ['com.android.application', 'com.android.library'].each { pluginId ->
+        project.pluginManager.withPlugin(pluginId) {
+            project.extensions.getByName('androidComponents').finalizeDsl { android ->
+                android.defaultConfig.ndk.abiFilters.clear()
+                android.defaultConfig.ndk.abiFilters.add(requestedAbi)
+                android.productFlavors.each { flavor ->
+                    flavor.ndk.abiFilters.clear()
+                    flavor.ndk.abiFilters.add(requestedAbi)
+                }
+            }
+        }
+    }
+}
