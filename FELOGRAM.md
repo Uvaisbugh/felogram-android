@@ -34,6 +34,8 @@ provider, data disclosure and Telegram terms are assessed.
 - [x] Create public repository separately from Windows prototype.
 - [x] Preserve official source provenance and GPL license.
 - [ ] Reproduce unmodified debug APK build; record toolchain/source manifests.
+- [x] Add a Windows build helper and prerequisite checks; Gradle wrapper and
+  exact SDK/NDK/CMake setup verified. APK completion remains a separate gate.
 - [ ] Add Felogram package/icon/name and About/source links; install beside upstream.
 - [ ] Configure own API/push identities outside source; keep signing secrets private.
 - [ ] Verify login, reopen/logout and multi-account isolation with test accounts.
