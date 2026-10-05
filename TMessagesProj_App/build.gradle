@@ -205,4 +205,4 @@ android {
     }
 }
 
-apply plugin: 'com.google.gms.google-services'
+// Own push configuration is a separate release gate. Do not generate upstream Firebase identity.

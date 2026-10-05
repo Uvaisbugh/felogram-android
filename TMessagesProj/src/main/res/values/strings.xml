@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Felogram</string>
+    <string name="AppNameBeta">Felogram Dev</string>
     <string name="LanguageName">English</string>
     <string name="English">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -11235,4 +11235,10 @@
     <string name="RoundVideoComposition">Composition</string>
     <string name="RoundVideoCompositionEnabled">Round video styling</string>
     <string name="RoundVideoCompositionInfo">Disable styling to record a plain square without outside-circle blur, dimming or Telegram overlays.</string>
+    <string name="FelogramBuildSetup">This offline developer build has no maintainer API configuration. Sign-in is disabled. Follow the source repository’s build guide to configure the app before account testing.</string>
+    <string name="FelogramBuildSetupTitle">Offline developer build</string>
+    <string name="FelogramIntroMessage">An independent Telegram client for developers and power users.\nOpen source. Built for focused conversations.</string>
+    <string name="FelogramAbout">About Felogram</string>
+    <string name="FelogramAboutMessage">Independent Telegram client based on official Android source. Licensed under GNU GPL v2 or later. This development build is not a finished release.</string>
+    <string name="FelogramSourceCode">Source code</string>
 </resources>
